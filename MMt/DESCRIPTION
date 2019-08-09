@@ -1,0 +1,13 @@
+Package: MMt
+Type: Package
+Title: Cauchy Mixture Model
+Version: 0.1
+Author: Yuantong Li <yli101@ncsu.edu >
+Maintainer: Yuantong Li <yli101@ncsu.edu>
+Description: This package is used to determine number of components for heavy-tailed data with Cauchy density
+Depends:
+    R (>= 3.2)
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1

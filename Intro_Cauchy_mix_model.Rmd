@@ -1,0 +1,56 @@
+---
+title: "Instruction for Cauchy mixture model"
+author: "Yuantong Li"
+date: "12/6/2018"
+output: pdf_document
+---
+
+# 1. Determine number of components of Cauchy mixture model 
+
+```{r}
+library(MMt)
+n = 100 # number of sample 
+mu = c(-1,0,1) # location parameters
+sigma = c(0.1, 0.1, 0.1) # scale parameters
+lambda = c(0.2, 0.3, 0.5) # weight parameters 
+seed = 27695 # random seed
+m = 10 # initial guess number of components
+a = -10 # historgam  begins from
+b = 10 # histogram end with
+```
+
+
+# 2. Create Cauchy mixture data
+```{r}
+x = rmixcauchy(n, mu, sigma, lambda, seed)
+# pmixcauchy(x, mu, sigma, lambda)
+# degree of overlapping
+DOL(mu, sigma, lambda) 
+# the measure of between components dispersion 
+BCD(mu, sigma, lambda) 
+```
+
+# 3. Pdf function of Cauchy
+```{r}
+cauchy_pdf_function = function(z){1/(pi*(1+z^2))}
+```
+
+# 4. Model result
+```{r}
+result = NI_QCP(x, m, cauchy_pdf_function, threshold = 0.001, weight_omit = 0.01)
+```
+
+# 5. Number of components and the estimate of parameters
+```{r}
+component_estimate = result$k
+mu_estimate = result$mu
+sigma_estimate = result$sigma
+lambda_estimate = result$lambda
+```
+
+# 6. Histogram of data with estimate parameters
+```{r}
+plot_cauchy(x, mu_estimate, sigma_estimate, lambda_estimate, a, b)
+```
+
+
